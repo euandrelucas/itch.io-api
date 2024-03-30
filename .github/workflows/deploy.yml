@@ -34,4 +34,4 @@ jobs:
       - name: Stopping container
         run: ssh prod 'bash -i -c "docker rm --force itch.io"'
       - name: Starting container
-        run: ssh prod 'bash -i -c "docker run -p 7986:7986 --hostname itchio -d --restart always --network host --cpuset-cpus=0-5 --memory="15g" --name itch.io adgdev/itchio-api"'
+        run: ssh prod 'bash -i -c "docker run -p 7986:3000 --hostname itchio -d --restart always --cpuset-cpus=0-5 --memory="15g" --name itch.io adgdev/itchio-api"'
