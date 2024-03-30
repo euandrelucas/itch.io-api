@@ -1,0 +1,17 @@
+{
+  "name": "itch.io-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "euandrelucas",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cheerio": "^1.0.0-rc.12",
+    "fastify": "^4.26.2"
+  }
+}
