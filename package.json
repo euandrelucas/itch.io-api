@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "prod": "LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libjemalloc.so.2 node --expose-gc --gc-interval=1 ."
   },
   "keywords": [],
   "author": "euandrelucas",

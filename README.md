@@ -1,4 +1,4 @@
-# itch.io Games API
+# itch.io API
 
 Esta é uma API simples para obter informações sobre jogos do site [itch.io](https://itch.io/). A API permite buscar os jogos mais recentes, os mais populares e os mais vendidos, além de permitir pesquisas por palavra-chave.
 
@@ -20,13 +20,13 @@ Esta é uma API simples para obter informações sobre jogos do site [itch.io](h
 1. Clone o repositório:
 
 ```
-git clone https://github.com/seu-usuario/itchio-games-api.git
+git clone https://github.com/euandrelucas/itch.io-api.git
 ```
 
 2. Instale as dependências:
 
 ```
-cd itchio-games-api
+cd itch.io-api
 npm install
 ```
 
