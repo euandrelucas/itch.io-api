@@ -4,9 +4,13 @@ const fastify = require('fastify')({
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const validTypes = ['horror', '3d', 'short', 'atmospheric', 'first-person', 'singleplayer', 'creepy', 'psychological-horror', 'psx', 'survival-horror', 'retro'];
+
 fastify.get('/', async (request, reply) => {
     return reply.send({
         status: 200,
+        message: 'Welcome to a itch.io alternative API',
+        types: validTypes,
         routes: [{
                 path: '/search?q=something',
                 description: 'Search for games on itch.io'
@@ -68,8 +72,6 @@ const parseGame = ($element) => {
         tags: $element.find('.tags a').map((index, tagElement) => $(tagElement).text().trim()).get()
     };
 };
-
-const validTypes = ['horror', '3d', 'short', 'atmospheric', 'first-person', 'singleplayer', 'creepy', 'psychological-horror', 'psx', 'survival-horror', 'retro'];
 
 fastify.get('/newest/:type', async (request, reply) => {
     const type = request.params.type.toLowerCase();
