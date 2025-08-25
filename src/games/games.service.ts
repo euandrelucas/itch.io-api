@@ -1,0 +1,73 @@
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+import { Game } from './interfaces/game.interface';
+
+@Injectable()
+export class GamesService {
+  private readonly validTypes = [
+    'horror',
+    '3d',
+    'short',
+    'atmospheric',
+    'first-person',
+    'singleplayer',
+    'creepy',
+    'psychological-horror',
+    'psx',
+    'survival-horror',
+    'retro',
+  ];
+
+  isValidType(type: string): boolean {
+    return this.validTypes.includes(type.toLowerCase());
+  }
+
+  async fetchGamesByTag(tag: string, endpoint: string): Promise<Game[]> {
+    try {
+      const response = await axios.get(
+        `https://itch.io/games/${endpoint}/tag-${tag}`,
+      );
+      const $ = cheerio.load(response.data);
+
+      const games: Game[] = [];
+      $('.game_cell').each((_, element) => {
+        games.push(this.parseGame($(element)));
+      });
+
+      return games;
+    } catch (e) {
+      throw new InternalServerErrorException('Erro ao buscar jogos');
+    }
+  }
+
+  async search(query: string): Promise<Game[]> {
+    try {
+      const response = await axios.get(`https://itch.io/search?q=${query}`);
+      const $ = cheerio.load(response.data);
+
+      const games: Game[] = [];
+      $('.game_cell').each((_, element) => {
+        games.push(this.parseGame($(element)));
+      });
+
+      return games;
+    } catch (e) {
+      throw new InternalServerErrorException('Erro ao buscar jogos');
+    }
+  }
+
+  private parseGame($element: cheerio.Cheerio<any>): Game {
+    return {
+      title: $element.find('.game_title').text().trim().replace(/\s\s+/g, ' ')
+        .replace($element.find('.price_value').text().trim(), ''),
+      url: $element.find('.game_cell .thumb_link.game_link').attr('href') || '',
+      author: $element.find('.game_author a').text().trim(),
+      authorUrl: $element.find('.game_author a').attr('href') || '',
+      coverUrl: $element.find('.game_thumb a.thumb_link img').attr('data-lazy_src') || '',
+      description: $element.find('.game_text').text().trim(),
+      price: $element.find('.price_value').text().trim() || 'Free',
+      tags: $element.find('.tags a').map((_, tagElement) => $(tagElement).text().trim()).get(),
+    };
+  }
+}

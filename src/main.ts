@@ -15,7 +15,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Itch.io Alternative API')
     .setDescription('API alternativa para buscar jogos no itch.io')
-    .setVersion('1.0')
+    .setVersion('2.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
