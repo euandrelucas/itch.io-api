@@ -40,7 +40,7 @@ export class GamesService {
       return games;
     } catch (e) {
       Logger.error(e);
-      throw new InternalServerErrorException('Erro ao buscar jogos');
+      throw new InternalServerErrorException('Error fetching games');
     }
   }
 
@@ -57,7 +57,7 @@ export class GamesService {
       return games;
     } catch (e) {
       Logger.error(e);
-      throw new InternalServerErrorException('Erro ao buscar jogos');
+      throw new InternalServerErrorException('Error fetching games');
     }
   }
 

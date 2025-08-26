@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class SearchDto {
-  @ApiProperty({ example: 'horror', description: 'Query de busca no itch.io' })
+  @ApiProperty({ example: 'horror', description: 'Search query for itch.io games' })
   @IsString()
   @IsNotEmpty()
   q: string;
