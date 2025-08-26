@@ -1,8 +1,8 @@
 {
   "name": "itch.io-api",
   "version": "2.0.0",
-  "description": "",
-  "author": "",
+  "description": "An API for accessing itch.io game data",
+  "author": "euandrelucas",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
