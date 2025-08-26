@@ -20,6 +20,7 @@ async function bootstrap() {
     .setTitle('Itch.io Alternative API')
     .setDescription('Alternative API for searching games on itch.io')
     .setVersion('2.0')
+    // TODO: Enable these server configurations when deploying to production or for local testing
     // .addServer('http://localhost:3000', 'Local')
     // .addServer('https://itch.andrepaiva.dev', 'Produção')
     .build();
