@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 import { Game } from './interfaces/game.interface';
@@ -39,6 +39,7 @@ export class GamesService {
 
       return games;
     } catch (e) {
+      Logger.error(e);
       throw new InternalServerErrorException('Erro ao buscar jogos');
     }
   }
@@ -55,14 +56,21 @@ export class GamesService {
 
       return games;
     } catch (e) {
+      Logger.error(e);
       throw new InternalServerErrorException('Erro ao buscar jogos');
     }
   }
 
+  private parseGameTitle($element: cheerio.Cheerio): string {
+    const rawTitle = $element.find('.game_title').text();
+    const normalizedTitle = rawTitle.trim().replace(GamesService.WHITESPACE_NORMALIZE_REGEX, ' ');
+    const priceText = $element.find('.price_value').text().trim();
+    return normalizedTitle.replace(priceText, '');
+  }
+
   private parseGame($element: cheerio.Cheerio): Game {
     return {
-      title: $element.find('.game_title').text().trim().replace(GamesService.WHITESPACE_NORMALIZE_REGEX, ' ')
-        .replace($element.find('.price_value').text().trim(), ''),
+      title: this.parseGameTitle($element),
       url: $element.find('.game_cell .thumb_link.game_link').attr('href') || '',
       author: $element.find('.game_author a').text().trim(),
       authorUrl: $element.find('.game_author a').attr('href') || '',
