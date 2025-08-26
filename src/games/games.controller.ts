@@ -5,7 +5,13 @@ import {
   Query,
   BadRequestException,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+} from '@nestjs/swagger';
 import { GamesService } from './games.service';
 import { SearchDto } from './dto/search.dto';
 
@@ -42,6 +48,38 @@ export class GamesController {
   @Get('/newest/:type')
   @ApiOperation({ summary: 'Get newest games by type' })
   @ApiParam({ name: 'type', example: 'horror' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of newest games',
+    schema: {
+      example: {
+        type: 'newest',
+        genre: 'horror',
+        games: [
+          {
+            title: 'Scary Game 1',
+            url: 'https://example.com/game1',
+            author: 'Game Studio 1',
+            authorUrl: 'https://example.com/gamestudio1',
+            coverUrl: 'https://example.com/game1-cover.jpg',
+            description: 'A scary game set in a haunted house.',
+            price: '$5',
+            genre: 'Horror',
+          },
+          {
+            title: 'Scary Game 2',
+            url: 'https://example.com/game2',
+            author: 'Game Studio 2',
+            authorUrl: 'https://example.com/gamestudio2',
+            coverUrl: 'https://example.com/game2-cover.jpg',
+            description: 'A scary game set in a haunted forest.',
+            price: '$10',
+            genre: 'Horror',
+          },
+        ],
+      },
+    },
+  })
   async getNewest(@Param('type') type: string) {
     this.validateType(type);
     return {
@@ -54,6 +92,38 @@ export class GamesController {
   @Get('/new-and-popular/:type')
   @ApiOperation({ summary: 'Get new and popular games by type' })
   @ApiParam({ name: 'type', example: '3d' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of new and popular games',
+    schema: {
+      example: {
+        type: 'new-and-popular',
+        genre: '3d',
+        games: [
+          {
+            title: '3D Game 1',
+            url: 'https://example.com/game1',
+            author: 'Game Studio 1',
+            authorUrl: 'https://example.com/gamestudio1',
+            coverUrl: 'https://example.com/game1-cover.jpg',
+            description: 'A thrilling 3D adventure game.',
+            price: '$15',
+            genre: '3D',
+          },
+          {
+            title: '3D Game 2',
+            url: 'https://example.com/game2',
+            author: 'Game Studio 2',
+            authorUrl: 'https://example.com/gamestudio2',
+            coverUrl: 'https://example.com/game2-cover.jpg',
+            description: 'An immersive 3D puzzle game.',
+            price: '$20',
+            genre: '3D',
+          },
+        ],
+      },
+    },
+  })
   async getNewAndPopular(@Param('type') type: string) {
     this.validateType(type);
     return {
@@ -66,6 +136,38 @@ export class GamesController {
   @Get('/top-sellers/:type')
   @ApiOperation({ summary: 'Get top sellers games by type' })
   @ApiParam({ name: 'type', example: 'retro' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of top sellers games',
+    schema: {
+      example: {
+        type: 'top-sellers',
+        genre: 'retro',
+        games: [
+          {
+            title: 'Retro Game 1',
+            url: 'https://example.com/game1',
+            author: 'Game Studio 1',
+            authorUrl: 'https://example.com/gamestudio1',
+            coverUrl: 'https://example.com/game1-cover.jpg',
+            description: 'A classic retro platformer.',
+            price: '$5',
+            genre: 'Retro',
+          },
+          {
+            title: 'Retro Game 2',
+            url: 'https://example.com/game2',
+            author: 'Game Studio 2',
+            authorUrl: 'https://example.com/gamestudio2',
+            coverUrl: 'https://example.com/game2-cover.jpg',
+            description: 'An exciting retro adventure game.',
+            price: '$10',
+            genre: 'Retro',
+          },
+        ],
+      },
+    },
+  })
   async getTopSellers(@Param('type') type: string) {
     this.validateType(type);
     return {
@@ -78,6 +180,38 @@ export class GamesController {
   @Get('/top-rated/:type')
   @ApiOperation({ summary: 'Get top rated games by type' })
   @ApiParam({ name: 'type', example: 'psx' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of top rated games',
+    schema: {
+      example: {
+        type: 'top-rated',
+        genre: 'psx',
+        games: [
+          {
+            title: 'PSX Game 1',
+            url: 'https://example.com/game1',
+            author: 'Game Studio 1',
+            authorUrl: 'https://example.com/gamestudio1',
+            coverUrl: 'https://example.com/game1-cover.jpg',
+            description: 'A classic PSX adventure game.',
+            price: '$15',
+            genre: 'PSX',
+          },
+          {
+            title: 'PSX Game 2',
+            url: 'https://example.com/game2',
+            author: 'Game Studio 2',
+            authorUrl: 'https://example.com/gamestudio2',
+            coverUrl: 'https://example.com/game2-cover.jpg',
+            description: 'An immersive PSX puzzle game.',
+            price: '$20',
+            genre: 'PSX',
+          },
+        ],
+      },
+    },
+  })
   async getTopRated(@Param('type') type: string) {
     this.validateType(type);
     return {
@@ -90,6 +224,38 @@ export class GamesController {
   @Get('/search')
   @ApiOperation({ summary: 'Search games by query' })
   @ApiQuery({ name: 'q', example: 'horror' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of search results',
+    schema: {
+      example: {
+        type: 'search',
+        query: 'horror',
+        games: [
+          {
+            title: 'Horror Game 1',
+            url: 'https://example.com/game1',
+            author: 'Game Studio 1',
+            authorUrl: 'https://example.com/gamestudio1',
+            coverUrl: 'https://example.com/game1-cover.jpg',
+            description: 'A terrifying horror experience.',
+            price: '$10',
+            genre: 'Horror',
+          },
+          {
+            title: 'Horror Game 2',
+            url: 'https://example.com/game2',
+            author: 'Game Studio 2',
+            authorUrl: 'https://example.com/gamestudio2',
+            coverUrl: 'https://example.com/game2-cover.jpg',
+            description: 'An immersive horror adventure.',
+            price: '$15',
+            genre: 'Horror',
+          },
+        ],
+      },
+    },
+  })
   async search(@Query() query: SearchDto) {
     return {
       type: 'search',

@@ -85,10 +85,7 @@ export class GamesService {
         '',
       description: $element.find('.game_text').text().trim(),
       price: $element.find('.price_value').text().trim() || 'Free',
-      tags: $element
-        .find('.tags a')
-        .map((_, tagElement) => $(tagElement).text().trim())
-        .get(),
+      genre: $element.find('.game_genre').text().trim(),
     };
   }
 }

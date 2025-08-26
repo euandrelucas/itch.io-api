@@ -6,5 +6,5 @@ export interface Game {
   coverUrl: string;
   description: string;
   price: string;
-  tags: string[];
+  genre: string;
 }

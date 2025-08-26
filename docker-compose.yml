@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: nest-app
+    restart: always
+    ports:
+      - "3407:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+volumes:
+  db_data:

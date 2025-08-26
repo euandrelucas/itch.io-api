@@ -20,7 +20,6 @@ async function bootstrap() {
     .setTitle('Itch.io Alternative API')
     .setDescription('Alternative API for searching games on itch.io')
     .setVersion('2.0')
-    // .addServer('http://localhost:3000', 'Local')
     // .addServer('https://itch.andrepaiva.dev', 'Produção')
     .build();
 

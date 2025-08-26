@@ -3,8 +3,6 @@
 Esta é a **versão 2** da API para obter informações sobre jogos do site [itch.io](https://itch.io/).
 Agora construída com **NestJS**, usando **Fastify** para alta performance e **Swagger** para documentação interativa.
 
----
-
 ## 🌐 Rotas Disponíveis
 
 Acesse a documentação Swagger em:
@@ -23,15 +21,11 @@ Principais endpoints:
 | `/top-rated/:type`       | Jogos mais bem avaliados por tipo   |
 | `/search?q=<query>`      | Pesquisa de jogos por palavra-chave |
 
----
-
 ## 📝 Parâmetros
 
 * `:type` – Tipo de jogo desejado. Tipos disponíveis:
   `horror, 3d, short, atmospheric, first-person, singleplayer, creepy, psychological-horror, psx, survival-horror, retro`
 * `q` – Consulta de pesquisa para buscar jogos por palavra-chave.
-
----
 
 ## ⚡ Instalação e Uso
 
@@ -66,8 +60,6 @@ E a documentação Swagger em:
 http://localhost:3000/docs
 ```
 
----
-
 ## 💡 Exemplos de Uso
 
 ### Jogos mais recentes de terror
@@ -82,8 +74,6 @@ curl http://localhost:3000/newest/horror
 curl http://localhost:3000/search?q=zombie
 ```
 
----
-
 ## 🛠 Tecnologias Utilizadas
 
 * [NestJS](https://nestjs.com/) – Framework backend moderno para Node.js
@@ -92,19 +82,13 @@ curl http://localhost:3000/search?q=zombie
 * [Cheerio](https://cheerio.js.org/) – Parsing de HTML (scraping)
 * [Swagger](https://swagger.io/) – Documentação interativa da API
 
----
-
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Abra uma issue ou envie um pull request.
-
----
 
 ## 📄 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
 
----
-
-[![Stargazers](https://reporoster.com/stars/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/stargazers)
-[![Forkers](https://reporoster.com/forks/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/network/members)
+[![Stargazers repo roster for @euandrelucas/itch.io-api](https://reporoster.com/stars/dark/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/stargazers)
+[![Forkers repo roster for @euandrelucas/itch.io-api](https://reporoster.com/forks/dark/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/network/members)
