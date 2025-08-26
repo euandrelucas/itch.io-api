@@ -5,6 +5,8 @@ import { Game } from './interfaces/game.interface';
 
 @Injectable()
 export class GamesService {
+  static readonly WHITESPACE_NORMALIZE_REGEX = /\s\s+/g;
+
   private readonly validTypes = [
     'horror',
     '3d',
@@ -57,9 +59,9 @@ export class GamesService {
     }
   }
 
-  private parseGame($element: cheerio.Cheerio<any>): Game {
+  private parseGame($element: cheerio.Cheerio): Game {
     return {
-      title: $element.find('.game_title').text().trim().replace(/\s\s+/g, ' ')
+      title: $element.find('.game_title').text().trim().replace(GamesService.WHITESPACE_NORMALIZE_REGEX, ' ')
         .replace($element.find('.price_value').text().trim(), ''),
       url: $element.find('.game_cell .thumb_link.game_link').attr('href') || '',
       author: $element.find('.game_author a').text().trim(),

@@ -8,6 +8,12 @@ import { SearchDto } from './dto/search.dto';
 export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
 
+  private validateType(type: string) {
+    if (!this.gamesService.isValidType(type)) {
+      throw new BadRequestException('Invalid type');
+    }
+  }
+
   @Get('/')
   @ApiOperation({ summary: 'API Info' })
   getInfo() {
@@ -28,9 +34,7 @@ export class GamesController {
   @ApiOperation({ summary: 'Get newest games by type' })
   @ApiParam({ name: 'type', example: 'horror' })
   async getNewest(@Param('type') type: string) {
-    if (!this.gamesService.isValidType(type)) {
-      throw new BadRequestException('Invalid type');
-    }
+    this.validateType(type);
     return { type: 'newest', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'newest') };
   }
 
@@ -38,9 +42,7 @@ export class GamesController {
   @ApiOperation({ summary: 'Get new and popular games by type' })
   @ApiParam({ name: 'type', example: '3d' })
   async getNewAndPopular(@Param('type') type: string) {
-    if (!this.gamesService.isValidType(type)) {
-      throw new BadRequestException('Invalid type');
-    }
+    this.validateType(type);
     return { type: 'new-and-popular', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'new-and-popular') };
   }
 
@@ -48,9 +50,7 @@ export class GamesController {
   @ApiOperation({ summary: 'Get top sellers games by type' })
   @ApiParam({ name: 'type', example: 'retro' })
   async getTopSellers(@Param('type') type: string) {
-    if (!this.gamesService.isValidType(type)) {
-      throw new BadRequestException('Invalid type');
-    }
+    this.validateType(type);
     return { type: 'top-sellers', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'top-sellers') };
   }
 
@@ -58,9 +58,7 @@ export class GamesController {
   @ApiOperation({ summary: 'Get top rated games by type' })
   @ApiParam({ name: 'type', example: 'psx' })
   async getTopRated(@Param('type') type: string) {
-    if (!this.gamesService.isValidType(type)) {
-      throw new BadRequestException('Invalid type');
-    }
+    this.validateType(type);
     return { type: 'top-rated', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'top-rated') };
   }
 

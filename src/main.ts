@@ -5,8 +5,12 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
+  const theme = new SwaggerTheme();
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
     new FastifyAdapter(),
@@ -16,13 +20,23 @@ async function bootstrap() {
     .setTitle('Itch.io Alternative API')
     .setDescription('API alternativa para buscar jogos no itch.io')
     .setVersion('2.0')
+    // .addServer('http://localhost:3000', 'Local')
+    // .addServer('https://itch.andrepaiva.dev', 'Produção')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    customCss: `
+      ${theme.getBuffer(SwaggerThemeNameEnum.DRACULA)}
+      .swagger-ui .topbar { background-color: #b00020 !important; } /* vermelho */
+      .swagger-ui .topbar .link span { color: #fff !important; }
+    `,
+    customSiteTitle: 'Itch.io Alternative API Docs',
+    customfavIcon: 'https://itch.io/favicon.ico',
+  });
 
   await app.listen(3000, '0.0.0.0');
-  console.log(`🚀 Server running at http://localhost:3000`);
-  console.log(`📖 Swagger docs at http://localhost:3000/docs`);
+  Logger.log(`🚀 Server running at http://localhost:3000`, 'Bootstrap');
+  Logger.log(`📖 Swagger docs at http://localhost:3000/docs`, 'Bootstrap');
 }
 bootstrap();
