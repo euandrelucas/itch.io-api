@@ -38,6 +38,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           port: ${{ secrets.SERVER_SSH_PORT }}
           script: |
-            cd /root/itch.io-api
+            cd /${{ secrets.SERVER_USER }}/itch.io-api
             git pull origin main
             docker compose up -d --build

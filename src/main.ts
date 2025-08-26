@@ -20,14 +20,14 @@ async function bootstrap() {
     .setTitle('Itch.io Alternative API')
     .setDescription('Alternative API for searching games on itch.io')
     .setVersion('2.0')
-    // .addServer('https://itch.andrepaiva.dev', 'Produção')
+    .addServer('https://itch.andrepaiva.dev', 'Production')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document, {
     customCss: `
       ${theme.getBuffer(SwaggerThemeNameEnum.DRACULA)}
-      .swagger-ui .topbar { background-color: #b00020 !important; } /* vermelho */
+      .swagger-ui .topbar { background-color: #ff244a !important; } /* vermelho */
       .swagger-ui .topbar .link span { color: #fff !important; }
     `,
     customSiteTitle: 'Itch.io Alternative API Docs',
