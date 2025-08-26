@@ -12,7 +12,9 @@ describe('GamesController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
+    app.useGlobalPipes(
+      new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+    );
     await app.init();
   });
 
@@ -23,7 +25,10 @@ describe('GamesController (e2e)', () => {
   it('/ (GET) should return API info', async () => {
     const res = await request(app.getHttpServer()).get('/');
     expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('message', 'Welcome to a itch.io alternative API');
+    expect(res.body).toHaveProperty(
+      'message',
+      'Welcome to a itch.io alternative API',
+    );
     expect(res.body).toHaveProperty('routes');
   });
 
@@ -43,29 +48,42 @@ describe('GamesController (e2e)', () => {
     expect(res.body.message).toBe('Invalid type');
   });
 
-  it.each(validTypes)('/new-and-popular/:type GET with valid type %s', async (type) => {
-    const res = await request(app.getHttpServer()).get(`/new-and-popular/${type}`);
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('type', 'new-and-popular');
-    expect(res.body).toHaveProperty('genre', type);
-    expect(res.body).toHaveProperty('games');
-  });
+  it.each(validTypes)(
+    '/new-and-popular/:type GET with valid type %s',
+    async (type) => {
+      const res = await request(app.getHttpServer()).get(
+        `/new-and-popular/${type}`,
+      );
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('type', 'new-and-popular');
+      expect(res.body).toHaveProperty('genre', type);
+      expect(res.body).toHaveProperty('games');
+    },
+  );
 
-  it.each(validTypes)('/top-sellers/:type GET with valid type %s', async (type) => {
-    const res = await request(app.getHttpServer()).get(`/top-sellers/${type}`);
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('type', 'top-sellers');
-    expect(res.body).toHaveProperty('genre', type);
-    expect(res.body).toHaveProperty('games');
-  });
+  it.each(validTypes)(
+    '/top-sellers/:type GET with valid type %s',
+    async (type) => {
+      const res = await request(app.getHttpServer()).get(
+        `/top-sellers/${type}`,
+      );
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('type', 'top-sellers');
+      expect(res.body).toHaveProperty('genre', type);
+      expect(res.body).toHaveProperty('games');
+    },
+  );
 
-  it.each(validTypes)('/top-rated/:type GET with valid type %s', async (type) => {
-    const res = await request(app.getHttpServer()).get(`/top-rated/${type}`);
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('type', 'top-rated');
-    expect(res.body).toHaveProperty('genre', type);
-    expect(res.body).toHaveProperty('games');
-  });
+  it.each(validTypes)(
+    '/top-rated/:type GET with valid type %s',
+    async (type) => {
+      const res = await request(app.getHttpServer()).get(`/top-rated/${type}`);
+      expect(res.status).toBe(200);
+      expect(res.body).toHaveProperty('type', 'top-rated');
+      expect(res.body).toHaveProperty('genre', type);
+      expect(res.body).toHaveProperty('games');
+    },
+  );
 
   it('/search?q=... (GET)', async () => {
     const res = await request(app.getHttpServer()).get('/search?q=horror');

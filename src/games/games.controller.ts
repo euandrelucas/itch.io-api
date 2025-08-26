@@ -1,4 +1,10 @@
-import { Controller, Get, Param, Query, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  BadRequestException,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { GamesService } from './games.service';
 import { SearchDto } from './dto/search.dto';
@@ -23,7 +29,10 @@ export class GamesController {
       routes: [
         { path: '/search?q=something', description: 'Search for games' },
         { path: '/newest/:type', description: 'Newest games by type' },
-        { path: '/new-and-popular/:type', description: 'New & popular games by type' },
+        {
+          path: '/new-and-popular/:type',
+          description: 'New & popular games by type',
+        },
         { path: '/top-sellers/:type', description: 'Top sellers by type' },
         { path: '/top-rated/:type', description: 'Top rated by type' },
       ],
@@ -35,7 +44,11 @@ export class GamesController {
   @ApiParam({ name: 'type', example: 'horror' })
   async getNewest(@Param('type') type: string) {
     this.validateType(type);
-    return { type: 'newest', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'newest') };
+    return {
+      type: 'newest',
+      genre: type,
+      games: await this.gamesService.fetchGamesByTag(type, 'newest'),
+    };
   }
 
   @Get('/new-and-popular/:type')
@@ -43,7 +56,11 @@ export class GamesController {
   @ApiParam({ name: 'type', example: '3d' })
   async getNewAndPopular(@Param('type') type: string) {
     this.validateType(type);
-    return { type: 'new-and-popular', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'new-and-popular') };
+    return {
+      type: 'new-and-popular',
+      genre: type,
+      games: await this.gamesService.fetchGamesByTag(type, 'new-and-popular'),
+    };
   }
 
   @Get('/top-sellers/:type')
@@ -51,7 +68,11 @@ export class GamesController {
   @ApiParam({ name: 'type', example: 'retro' })
   async getTopSellers(@Param('type') type: string) {
     this.validateType(type);
-    return { type: 'top-sellers', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'top-sellers') };
+    return {
+      type: 'top-sellers',
+      genre: type,
+      games: await this.gamesService.fetchGamesByTag(type, 'top-sellers'),
+    };
   }
 
   @Get('/top-rated/:type')
@@ -59,13 +80,21 @@ export class GamesController {
   @ApiParam({ name: 'type', example: 'psx' })
   async getTopRated(@Param('type') type: string) {
     this.validateType(type);
-    return { type: 'top-rated', genre: type, games: await this.gamesService.fetchGamesByTag(type, 'top-rated') };
+    return {
+      type: 'top-rated',
+      genre: type,
+      games: await this.gamesService.fetchGamesByTag(type, 'top-rated'),
+    };
   }
 
   @Get('/search')
   @ApiOperation({ summary: 'Search games by query' })
   @ApiQuery({ name: 'q', example: 'horror' })
   async search(@Query() query: SearchDto) {
-    return { type: 'search', query: query.q, games: await this.gamesService.search(query.q) };
+    return {
+      type: 'search',
+      query: query.q,
+      games: await this.gamesService.search(query.q),
+    };
   }
 }
