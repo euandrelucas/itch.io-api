@@ -41,4 +41,4 @@ jobs:
             cd /${{ secrets.SERVER_USER }}/itch.io-api
             git pull origin main
             docker compose up -d --build
-            docker system prune -f
+            docker system prune --all --force
