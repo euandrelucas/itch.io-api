@@ -1,70 +1,110 @@
-# itch.io API
+# itch.io API v2
 
-Esta é uma API simples para obter informações sobre jogos do site [itch.io](https://itch.io/). A API permite buscar os jogos mais recentes, os mais populares e os mais vendidos, além de permitir pesquisas por palavra-chave.
+Esta é a **versão 2** da API para obter informações sobre jogos do site [itch.io](https://itch.io/).
+Agora construída com **NestJS**, usando **Fastify** para alta performance e **Swagger** para documentação interativa.
 
-## Rotas Disponíveis
+---
 
-- `/newest/:type`: Retorna os jogos mais recentes de acordo com o tipo especificado.
-- `/new-and-popular/:type`: Retorna os jogos mais recentes e populares de acordo com o tipo especificado.
-- `/top-sellers/:type`: Retorna os jogos mais vendidos de acordo com o tipo especificado.
-- `/top-rated/:type`: Retorna os jogos mais bem avaliados de acordo com o tipo especificado.
-- `/search?q=<query>`: Retorna os jogos correspondentes à consulta fornecida.
+## 🌐 Rotas Disponíveis
 
-## Parâmetros
+Acesse a documentação Swagger em:
 
-- `:type`: O tipo de jogo desejado. Os tipos disponíveis são: horror, 3d, short, atmospheric, first-person, singleplayer, creepy, psychological-horror, psx, survival-horror e retro.
-- `<query>`: Consulta de pesquisa para pesquisar jogos por palavra-chave.
+```
+http://localhost:3000/docs
+```
 
-## Instalação e Uso
+Principais endpoints:
+
+| Rota                     | Descrição                           |
+| ------------------------ | ----------------------------------- |
+| `/newest/:type`          | Jogos mais recentes por tipo        |
+| `/new-and-popular/:type` | Jogos novos e populares por tipo    |
+| `/top-sellers/:type`     | Jogos mais vendidos por tipo        |
+| `/top-rated/:type`       | Jogos mais bem avaliados por tipo   |
+| `/search?q=<query>`      | Pesquisa de jogos por palavra-chave |
+
+---
+
+## 📝 Parâmetros
+
+* `:type` – Tipo de jogo desejado. Tipos disponíveis:
+  `horror, 3d, short, atmospheric, first-person, singleplayer, creepy, psychological-horror, psx, survival-horror, retro`
+* `q` – Consulta de pesquisa para buscar jogos por palavra-chave.
+
+---
+
+## ⚡ Instalação e Uso
 
 1. Clone o repositório:
 
-```
+```bash
 git clone https://github.com/euandrelucas/itch.io-api.git
 ```
 
 2. Instale as dependências:
 
-```
+```bash
 cd itch.io-api
 npm install
 ```
 
-3. Inicie o servidor:
+3. Inicie o servidor em modo desenvolvimento:
+
+```bash
+npm run start:dev
+```
+
+4. Acesse a API em:
 
 ```
-npm start
+http://localhost:3000
 ```
 
-4. A API estará disponível em `http://localhost:3000`.
-
-## Exemplos de Uso
-
-### Obtendo os jogos mais recentes de terror:
+E a documentação Swagger em:
 
 ```
+http://localhost:3000/docs
+```
+
+---
+
+## 💡 Exemplos de Uso
+
+### Jogos mais recentes de terror
+
+```bash
 curl http://localhost:3000/newest/horror
 ```
 
-### Pesquisando jogos com a palavra-chave "zombie":
+### Pesquisar jogos com a palavra-chave "zombie"
 
-```
+```bash
 curl http://localhost:3000/search?q=zombie
 ```
 
-## Tecnologias Utilizadas
+---
 
-- [Fastify](https://www.fastify.io/): Framework web para Node.js.
-- [Axios](https://axios-http.com/): Cliente HTTP para fazer solicitações.
-- [Cheerio](https://cheerio.js.org/): Implementação do core do jQuery para Node.js.
+## 🛠 Tecnologias Utilizadas
 
-## Contribuindo
+* [NestJS](https://nestjs.com/) – Framework backend moderno para Node.js
+* [Fastify](https://www.fastify.io/) – Framework web de alta performance
+* [Axios](https://axios-http.com/) – Cliente HTTP para requisições
+* [Cheerio](https://cheerio.js.org/) – Parsing de HTML (scraping)
+* [Swagger](https://swagger.io/) – Documentação interativa da API
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
+---
 
-## Licença
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Abra uma issue ou envie um pull request.
+
+---
+
+## 📄 Licença
 
 Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
 
 [![Stargazers](https://reporoster.com/stars/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/stargazers)
 [![Forkers](https://reporoster.com/forks/euandrelucas/itch.io-api)](https://github.com/euandrelucas/itch.io-api/network/members)
