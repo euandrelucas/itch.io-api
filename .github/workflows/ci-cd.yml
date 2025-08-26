@@ -40,4 +40,5 @@ jobs:
           script: |
             cd /${{ secrets.SERVER_USER }}/itch.io-api
             git pull origin main
-            docker compose up -d --build --no-cache
+            docker compose up -d --build
+            docker system prune -f
