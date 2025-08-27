@@ -34,7 +34,7 @@ export class GamesService {
       const response = await axios.get(
         `https://itch.io/games/${endpoint}/tag-${tag}`,
       );
-      const $ = cheerio.load(response.data);
+      const $ = cheerio.load(response.data as string);
 
       const games: Game[] = [];
       $('.game_cell').each((_, element) => {
@@ -51,7 +51,7 @@ export class GamesService {
   async search(query: string): Promise<Game[]> {
     try {
       const response = await axios.get(`https://itch.io/search?q=${query}`);
-      const $ = cheerio.load(response.data);
+      const $ = cheerio.load(response.data as string);
 
       const games: Game[] = [];
       $('.game_cell').each((_, element) => {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
@@ -45,7 +46,8 @@ describe('GamesController (e2e)', () => {
   it('/newest/:type (GET) with invalid type', async () => {
     const res = await request(app.getHttpServer()).get('/newest/invalidtype');
     expect(res.status).toBe(400);
-    expect(res.body.message).toBe('Invalid type');
+    const body = res.body as { message: string };
+    expect(body.message).toBe('Invalid type');
   });
 
   it.each(validTypes)(

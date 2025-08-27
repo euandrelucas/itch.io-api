@@ -38,4 +38,6 @@ async function bootstrap() {
   Logger.log(`🚀 Server running at http://localhost:3000`, 'Bootstrap');
   Logger.log(`📖 Swagger docs at http://localhost:3000/docs`, 'Bootstrap');
 }
-bootstrap();
+bootstrap().catch((err) => {
+  Logger.error('Error during bootstrap', err, 'Bootstrap');
+});

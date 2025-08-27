@@ -1,4 +1,4 @@
-name: 🔧 Testes E2E com NestJS + Deploy
+name: 🔧 Testes + Deploy
 
 on:
   push:
@@ -7,38 +7,72 @@ on:
       - dev
 
 jobs:
-  e2e-tests:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Verificar repositório
+      - name: Checkout do código 📥
         uses: actions/checkout@v3
 
-      - name: Configurar Node.js
+      - name: Instalar Node.js 🟢
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 20
 
-      - name: Instalar dependências
+      - name: Cache de dependências 💾
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Instalar dependências 📦
         run: npm install
 
-      - name: Rodar testes e2e
+      - name: Rodar ESLint ✨
+        run: npm run lint --if-present
+
+      - name: Rodar testes unitários (Jest)
+        run: npm run test -- --passWithNoTests
+
+      - name: Rodar testes E2E
         run: npm run test:e2e
 
-  deploy:
+      - name: Verificar vulnerabilidades
+        run: npm audit --omit=dev
+
+  deploy-prod:
     runs-on: ubuntu-latest
-    needs: e2e-tests  # só roda se os testes passarem
-    if: github.ref == 'refs/heads/main' # deploy só na main
+    needs: checks
+    if: github.ref == 'refs/heads/main'
+
     steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_SSH_PORT }}
-          script: |
+      - name: Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat >>~/.ssh/config <<EOF
+          Host prod
+            HostName ${{ secrets.SERVER_HOST }}
+            User ${{ secrets.SERVER_USER }}
+            Port ${{ secrets.SERVER_SSH_PORT }}
+            IdentityFile ~/.ssh/id_rsa
+            ServerAliveInterval 100
+            ServerAliveCountMax 3
+            TCPKeepAlive yes
+            StrictHostKeyChecking no
+            UserKnownHostsFile=/dev/null
+          EOF
+
+      - name: Deploy em Produção
+        run: |
+          ssh prod << 'EOF'
+            set -e
             cd /${{ secrets.SERVER_USER }}/itch.io-api
-            git pull origin main
+            git fetch origin main
+            git reset --hard origin/main
             docker compose up -d --build
-            docker system prune --all --force
+            docker system prune -af
+          EOF
